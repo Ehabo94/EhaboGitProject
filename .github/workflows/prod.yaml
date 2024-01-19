@@ -1,8 +1,10 @@
 name: Prod build and deployment
+
 on:
   push:
     branches:
       - 'main'
+
 jobs:
   BuildSimulation:
     # TODO abort this workflow if the git user triggered it is not the release manager
@@ -12,17 +14,19 @@ jobs:
       - name: Build
         run: |
           echo building and packing and app...
+
   DeploySimulation:
     runs-on: ubuntu-latest
     needs: BuildSimulation
-    steps:      
+    steps:
       - uses: actions/checkout@v3
       - name: Check Release Manager
         run: |
-            if [ "${{ github.actor }}" != "release-manager-username" ]; then
+          if [ "${{ github.actor }}" != "release-manager-username" ]; then
             echo "Only the release manager is allowed to trigger this workflow. Aborting..."
             exit 1
           fi
       - name: Deploy
         run: |
           echo deploying into Test env
+
