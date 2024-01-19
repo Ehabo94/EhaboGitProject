@@ -15,6 +15,8 @@ jobs:
           release_version=${GITHUB_REF#*release-}
           if [ "$(cat version.json | jq -r '.version')" != "$release_version" ]
           then
+          echo "release_version:$release_version"
+          echo "$(cat version.json | jq -r '.version')"
             echo -e "\n\nrelease version mismatches the version written in version.json. Please change version.json and commit your change.\n\n"
             exit 1
           fi
